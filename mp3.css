@@ -52,7 +52,7 @@ ul {
 }
 
 li {
-    background: #000000;
+    background: linear-gradient(45deg, #363636, #000000);
     padding: 10px;
     margin: 5px;
     border-radius: 5px;
