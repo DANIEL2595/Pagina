@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir y Reproducir MP3</title>
+    <link rel="stylesheet" href="mp3.css">
+</head>
+<body>
+    <a class="volver" href="index.html">Volver</a>
+    <div class="container">
+        <h2>Sube tu archivo MP3</h2>
+        <input type="file" id="fileInput" accept="audio/mp3">
+        <ul id="playlist"></ul>
+        <audio id="audioPlayer" controls></audio>
+    </div>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const playlist = document.getElementById('playlist');
+        const audioPlayer = document.getElementById('audioPlayer');
+        
+        const tracks = [];
+
+        fileInput.addEventListener('change', function(event) {
+            for (const file of event.target.files) {
+                const objectURL = URL.createObjectURL(file);
+                tracks.push({ name: file.name, url: objectURL });
+                
+                const listItem = document.createElement('li');
+                listItem.textContent = file.name;
+                listItem.addEventListener('click', function() {
+                    audioPlayer.src = objectURL;
+                    audioPlayer.play();
+                });
+                playlist.appendChild(listItem);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,10 +1,16 @@
 body {
-    background-color: black;
+    background: linear-gradient(45deg, #000000, #222222, #555555);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
     text-align: center;
     margin: 0;
     font-family: Arial, sans-serif;
 }
-
+@keyframes gradientBG{
+    0% { background-position: 0% 50%;}
+    50% { background-position: 100% 50%;}
+    100% { background-position: 0% 50%;}
+}
 .contenedor {
     display: flex;
     flex-direction: column;
@@ -14,13 +20,19 @@ body {
 }
 .audio{
     margin-top: 20px;
+    display: flex;
+    text-align: center;
+    margin-left: 100px;
+    filter: invert(1) brightness(1.2) contrast(1.2);
+    width: 100%;
 }
 main{
     margin: 20px auto;
     max-width: 700px;
 }
+
 button {
-    background: linear-gradient(45deg, #3e03e0, #ff4b2b);
+    background: linear-gradient(45deg, #696969, #000000);
     color: white;
     border: none;
     padding: 12px 24px;
@@ -30,7 +42,11 @@ button {
     transition: transform 0.2s ease;
     margin: 20px 0;
 }
-
+.SubirMp3{
+    margin-left: 20px;
+    margin-top: 8px;
+    filter: invert(1);
+}
 button:hover {
     transform: scale(1.1);
 }
@@ -56,6 +72,6 @@ button:hover {
     font-size: 16px;
     border-radius: 25px;
     width: 90%;
-    max-width: 800px;
+    max-width: 900px;
     margin: 20px auto;
 }
