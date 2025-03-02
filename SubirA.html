@@ -16,6 +16,7 @@
             <button id="prevBtn">⏮️</button>
             <button id="playPauseBtn">▶️</button>
             <button id="nextBtn">⏭️</button>
+            <button id="shuffleBtn">🔀</button>
         </div>
     </div>
     <script>
@@ -28,6 +29,7 @@
         
         let tracks = [];
         let currentTrackIndex = 0;
+        let isShuffle = false;
 
         fileInput.addEventListener('change', function(event) {
             for (const file of event.target.files) {
@@ -57,11 +59,20 @@
         });
 
         function nextTrack() {
-            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
-            playTrack(currentTrackIndex);
-        }
+    if (isShuffle) {
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * tracks.length);
+        } while (randomIndex === currentTrackIndex); 
+        currentTrackIndex = randomIndex;
+    } else {
+        currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+    }
+    playTrack(currentTrackIndex);
+}
 
-        function prevTrack() {
+
+function prevTrack() {
             currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
             playTrack(currentTrackIndex);
         }
@@ -69,12 +80,21 @@
         function togglePlayPause() {
             if (audioPlayer.paused) {
                 audioPlayer.play();
-                playPauseBtn.textContent = "⏸️";
+                updatePlayPauseIcon(true);
             } else {
                 audioPlayer.pause();
-                playPauseBtn.textContent = "▶️";
+                updatePlayPauseIcon(false);
             }
         }
+
+        shuffleBtn.addEventListener("click", function() {
+            isShuffle = !isShuffle;
+            this.textContent = isShuffle ? "🔀" : "🔁";
+        });
+
+        audioPlayer.addEventListener('ended', function() {
+            nextTrack();
+        });
 
         nextBtn.addEventListener('click', nextTrack);
         prevBtn.addEventListener('click', prevTrack);
