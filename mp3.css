@@ -68,7 +68,9 @@ audio {
     width: 35%;
     margin-top: 15px;
     border-radius: 5px;
+    filter: invert(1) brightness(1) contrast(0.9);
 }
+
 .volver{
     background: linear-gradient(45deg, #696969, #000000);
     color: white;
@@ -79,4 +81,37 @@ audio {
     transition: transform 0.2s ease;
     margin-right: 800px;
     text-decoration: none;
+}
+#prevBtn{
+    background: linear-gradient(45deg, #696969, #000000);
+    color: rgb(0, 0, 0);
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin-top: 20px;
+    mix-blend-mode: luminosity;
+}
+#playPauseBtn{
+    background: linear-gradient(45deg, #696969, #000000);
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin-left: 20px;
+    mix-blend-mode: luminosity;
+}
+#nextBtn{
+    background: linear-gradient(45deg, #696969, #000000);
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin-left: 20px;
+    mix-blend-mode: luminosity;
 }

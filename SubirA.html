@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -6,19 +6,28 @@
     <link rel="stylesheet" href="mp3.css">
 </head>
 <body>
-    <a class="volver" href="index.html">Volver</a>
+    <a class="Volver" href="index.html">Volver</a>
     <div class="container">
-        <h2>Sube tu archivo MP3</h2>
+        <h2>Sube tus archivos MP3</h2>
         <input type="file" id="fileInput" accept="audio/mp3" multiple>
         <ul id="playlist"></ul>
         <audio id="audioPlayer" controls></audio>
+        <div class="controls">
+            <button id="prevBtn">⏮️</button>
+            <button id="playPauseBtn">▶️</button>
+            <button id="nextBtn">⏭️</button>
+        </div>
     </div>
     <script>
         const fileInput = document.getElementById('fileInput');
         const playlist = document.getElementById('playlist');
         const audioPlayer = document.getElementById('audioPlayer');
+        const prevBtn = document.getElementById('prevBtn');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const nextBtn = document.getElementById('nextBtn');
         
-        const tracks = [];
+        let tracks = [];
+        let currentTrackIndex = 0;
 
         fileInput.addEventListener('change', function(event) {
             for (const file of event.target.files) {
@@ -28,12 +37,48 @@
                 const listItem = document.createElement('li');
                 listItem.textContent = file.name;
                 listItem.addEventListener('click', function() {
-                    audioPlayer.src = objectURL;
-                    audioPlayer.play();
+                    playTrack(tracks.findIndex(t => t.url === objectURL));
                 });
                 playlist.appendChild(listItem);
             }
         });
+
+        function playTrack(index) {
+            if (index >= 0 && index < tracks.length) {
+                currentTrackIndex = index;
+                audioPlayer.src = tracks[index].url;
+                audioPlayer.play();
+                playPauseBtn.textContent = "⏸️";
+            }
+        }
+
+        audioPlayer.addEventListener('ended', function() {
+            nextTrack();
+        });
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            playTrack(currentTrackIndex);
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            playTrack(currentTrackIndex);
+        }
+
+        function togglePlayPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseBtn.textContent = "⏸️";
+            } else {
+                audioPlayer.pause();
+                playPauseBtn.textContent = "▶️";
+            }
+        }
+
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
+        playPauseBtn.addEventListener('click', togglePlayPause);
     </script>
 </body>
 </html>
